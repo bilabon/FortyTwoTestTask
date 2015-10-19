@@ -1,22 +1,38 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>{% block title %}{% endblock title %}Site Name</title>
+<head>
+    <title>{% block head_title %}42-test-bilabon{% endblock %}</title>
 
-        <meta http-equiv="X-UA-Compatible" content="chrome=IE7" />
+    {% include 'head_css.html' %}
 
-        <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
-        <meta name="apple-mobile-web-app-capable" content="yes"/>
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <style>
+        {% block style %}{% endblock %}
+    </style>
 
-        <link rel="stylesheet" href="{% static 'css/screen.css' %}" media="screen, projection"/>
+    {% include "head_js.html" %}
 
-        {% block extra_head %}{% endblock extra_head %}
+    {% block head_javascript %}
+    {% endblock %}
 
-    </head>
-    <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
-        {% block content %}{% endblock content %}
-    </body>
+</head>
+
+<body>
+{% include 'navbar.html' %}
+
+<!-- container -->
+<div class="container">
+    {% block content %}
+
+    {% endblock %}
+</div>
+<!-- /container -->
+
+
+{% block bottom_js %}
+{% endblock %}
+
+{% include 'footer.html' %}
+
+</body>
 </html>
