@@ -42,6 +42,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'south',
+    'selenium',
+
     'apps.hello',
     'apps.contact',
 )
