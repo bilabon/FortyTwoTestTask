@@ -4,12 +4,14 @@ from django.contrib.auth.models import User
 
 from .models import Contact
 
+
 # Define an inline admin descriptor for Contact model
 # which acts a bit like a singleton
 class ContactInline(admin.StackedInline):
     model = Contact
     can_delete = False
     verbose_name_plural = 'Additional info'
+
 
 # Define a new User admin
 class UserAdmin(UserAdmin):

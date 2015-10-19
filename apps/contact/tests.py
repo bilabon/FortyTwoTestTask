@@ -3,9 +3,12 @@ from django.core.urlresolvers import reverse
 
 
 class ContactPageTest(TestCase):
+    """
+    Testing response from home page
+    """
     fixtures = ['fixtures/user.json']
 
-    def test_exist_home_url(self):  
+    def test_exist_home_url(self):
         """
         Check main URL responce.
         """
