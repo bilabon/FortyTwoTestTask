@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block head_title %}Home | {{ block.super }}{% endblock %}
+
+{% block content %}
+        <div class="row">
+            <div class="col-sm-6">
+                <p><span class="text-muted">Name: </span>{{ object.first_name }}</p>
+                <p><span class="text-muted">Surname: </span>{{ object.last_name }}</p>
+                <p><span class="text-muted">Date of birth: </span>{{ object.contact.date_of_birth|date:"m/d/Y" }}</p>
+            </div>
+
+            <hr class="visible-xs">
+
+            <div class="col-sm-6">
+                <p><span class="text-muted">Email: </span>{{ object.email }}</p>
+                <p><span class="text-muted">Bio: </span>{{ object.contact.bio }}</p>
+                <p><span class="text-muted">Contacts: </span>{{ object.contact.contacts }}</p>
+            </div>
+        </div>
+{% endblock %}

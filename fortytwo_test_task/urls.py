@@ -1,6 +1,9 @@
 from django.conf.urls import patterns, include, url
-
+from django.views.generic import TemplateView
 from django.contrib import admin
+from apps.contact.views import HomeView
+
+
 admin.autodiscover()
 
 urlpatterns = patterns(
@@ -10,4 +13,5 @@ urlpatterns = patterns(
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', HomeView.as_view(), name='home'),
 )
