@@ -5,14 +5,14 @@ from django.core.urlresolvers import reverse
 class ContactPageTest(TestCase):
     fixtures = ['fixtures/user.json']
 
-    def test_exist_main_url(self):
+    def test_exist_home_url(self):  
         """
         Check main URL responce.
         """
         response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
 
-    def test_assert_data_at_main_url(self):
+    def test_assert_data_on_home_url(self):
         """
         Check present my name, surname, date of birth, email, bio, contacts
         on the home page.

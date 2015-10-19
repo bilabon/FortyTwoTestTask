@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 
 
 class HomeView(DetailView):
+    """
+    View for home page. Return User object for contact info.
+    """
     model = User
     template_name = 'home.html'
 
