@@ -3,7 +3,7 @@ SETTINGS=fortytwo_test_task.settings
 
 test:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) test
-	flake8 --exclude '*migrations*' --ignore=F401,F403 apps fortytwo_test_task
+	flake8 --exclude '*migrations*' --ignore=F401,F403,42cc apps fortytwo_test_task
 
 run:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) runserver

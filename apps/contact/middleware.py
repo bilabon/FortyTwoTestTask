@@ -12,6 +12,6 @@ class SaveRequestMiddleware(object):
             [request.META['REQUEST_METHOD'],
              request.META['PATH_INFO'],
              request.META['SERVER_PROTOCOL']]
-            )
+        )
         if reverse('request-count') != request.META['PATH_INFO']:
             RequestLog(http_request=http_request).save()
