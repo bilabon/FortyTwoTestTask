@@ -13,17 +13,3 @@ class Contact(models.Model):
 
     def __unicode__(self):
         return self.user
-
-
-class RequestLog(models.Model):
-    """
-    Model for saving all http requests to database
-    """
-    http_request = models.CharField(max_length=100)
-    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
-
-    class Meta:
-        ordering = ["-timestamp"]
-
-    def __unicode__(self):
-        return self.request

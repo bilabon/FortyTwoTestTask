@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from apps.contact.views import HomeView, RequestLogListView, RequestCountView
+from apps.contact.views import HomeView
+from apps.requests.views import RequestLogListView, RequestCountView
 
 
 admin.autodiscover()
