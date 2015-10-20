@@ -9,7 +9,7 @@ class SaveRequestMiddleware(object):
     """
     def process_request(self, request):
         path_info = request.META['PATH_INFO']
-        if not request.is_ajax() and reverse('request-count') != path_info:
+        if reverse('request-count') != path_info:
             new_http_request = RequestLog()
             new_http_request.method = request.META['REQUEST_METHOD']
             new_http_request.path_info = path_info

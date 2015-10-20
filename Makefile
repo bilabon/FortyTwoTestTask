@@ -1,5 +1,12 @@
 MANAGE=django-admin.py
 SETTINGS=fortytwo_test_task.settings
+ROOT_DIR=`pwd`
+
+install:
+	virtualenv --no-site-packages .env
+	. $(ROOT_DIR)/.env/bin/activate; pip install -r $(ROOT_DIR)/requirements.txt
+	. $(ROOT_DIR)/.env/bin/activate; make syncdb
+	. $(ROOT_DIR)/.env/bin/activate; make migrate
 
 test:
 	$(MAKE) clean
