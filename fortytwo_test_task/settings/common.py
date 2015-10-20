@@ -43,9 +43,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'south',
-    'selenium',
 
     'apps.contact',
+    'apps.requests',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -55,7 +55,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'apps.contact.middleware.SaveRequestMiddleware',
+    'apps.requests.middleware.SaveRequestMiddleware',
 )
 
 ROOT_URLCONF = 'fortytwo_test_task.urls'
