@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block head_title %}Home | {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <ul class="list-unstyled">
+            {% for object in object_list %}
+            <li>&bull; {{ object.http_request }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block bottom_js %}
+
+$(document).ready(function(){
+
+
+    function updateTitle(count){
+        $.ajax({
+            type: 'GET',
+            url: '{% url "request-count" %}',
+            error: function(data){
+                console.log(None);
+            },
+            success: function(data){
+                count = data['request_count'] - count;
+                console.log(count);
+                if (count > 0) {
+                    document.title = '(' + count + ') Home | 42-test-bilabon';
+                };
+                
+            }
+        });
+    };
+    setInterval(function() {
+        updateTitle({{ request_count }});
+    }, 1000);
+
+
+});
+
+{% endblock %}
