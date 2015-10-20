@@ -2,3 +2,6 @@ Django==1.6.7
 42cc-pystyle==0.0.15
 south==1.0.2
 selenium==2.48.0
+Pillow
+django-imagekit
+django-crispy-forms==1.5.1

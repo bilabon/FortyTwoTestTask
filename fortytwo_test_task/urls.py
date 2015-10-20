@@ -1,5 +1,8 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
+
 from apps.contact.views import HomeView
 from apps.requests.views import RequestLogListView, RequestCountView
 
@@ -13,8 +16,18 @@ urlpatterns = patterns(
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^login/$', 'django.contrib.auth.views.login', {
+        'template_name': 'auth/login.html',
+    }, name='login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {
+        'template_name': 'auth/logout.html',
+        'next_page': '/',
+    }, name='logout'),
 
     url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^request-log/$', RequestLogListView.as_view(), name='request-log'),
+    url(r'^requests/$', RequestLogListView.as_view(), name='request-log'),
     url(r'^request-count/$', RequestCountView.as_view(), name='request-count'),
 )
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

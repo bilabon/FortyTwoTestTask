@@ -6,7 +6,7 @@ class ContactPageTest(TestCase):
     """
     Testing response from home page
     """
-    fixtures = ['fixtures/user.json']
+    fixtures = ['fixtures/contact.json']
 
     def test_exist_home_url(self):
         """
@@ -23,7 +23,9 @@ class ContactPageTest(TestCase):
         response = self.client.get(reverse('home'))
         self.assertIn('Name: </span>John', response.content)
         self.assertIn('Surname: </span>Smith', response.content)
-        self.assertIn('Date of birth: </span>10/15/2015', response.content)
-        self.assertIn('Email: </span>test@example.com', response.content)
-        self.assertIn('Bio: </span>some bio', response.content)
-        self.assertIn('Contacts: </span>some contacts', response.content)
+        self.assertIn('Date of birth: </span>10/20/2015', response.content)
+        self.assertIn('Bio: </span>Some bio', response.content)
+        self.assertIn('Contacts: </span>Some contact', response.content)
+        self.assertIn('Email: </span>test@email.com', response.content)
+        self.assertIn('Jabber: </span>test@jabber.com', response.content)
+        self.assertIn('Skype: </span>test_skype', response.content)
