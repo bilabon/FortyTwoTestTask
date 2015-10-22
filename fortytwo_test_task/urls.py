@@ -28,7 +28,8 @@ urlpatterns = patterns(
     url(r'^requests/$', RequestLogListView.as_view(), name='request-log'),
     url(r'^request-count/$', RequestCountView.as_view(), name='request-count'),
 
-    url(r'^contact/$', AjaxContactUpdateView.as_view(), name='ajax_contact_update_view'),
+    url(r'^contact/$', AjaxContactUpdateView.as_view(),
+        name='ajax_contact_update_view'),
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

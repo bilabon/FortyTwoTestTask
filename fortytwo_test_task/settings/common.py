@@ -45,7 +45,6 @@ INSTALLED_APPS = (
     'south',
     'imagekit',
     'crispy_forms',
-   #'floppyforms',
     'sorl.thumbnail',
 
     'apps.contact',
