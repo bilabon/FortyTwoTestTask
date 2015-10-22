@@ -38,11 +38,10 @@
             
 
             </br>
+            {{ form.avatar|as_crispy_field }}
             {{ form.first_name|as_crispy_field }}
             {{ form.last_name|as_crispy_field }}
             {{ form.date_of_birth|as_crispy_field }}
-
-            <input type='submit' class='btn btn-primary' value='Update'>
 
         </div>
         <div class='col-sm-7'>
@@ -52,7 +51,7 @@
             {{ form.skype|as_crispy_field }}
             {{ form.bio|as_crispy_field }}
             {{ form.contacts|as_crispy_field }}
-            {{ form.avatar|as_crispy_field }}
+            
             {{ form.media }}
 
         </div>
@@ -63,6 +62,7 @@
                     <span class='sr-only'></span>
                 </div>
             </div>
+            <input type='submit' class='btn btn-primary' value='Update'>
         </div>
 </form>
 {% endblock %}
