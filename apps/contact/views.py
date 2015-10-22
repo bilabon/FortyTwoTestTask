@@ -1,15 +1,28 @@
-import json
-from django.http import HttpResponse, Http404
-from django.views.generic import View, DetailView, ListView
+from django.views.generic import DetailView, UpdateView
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
 from .models import Contact
+from .forms import UpdateContactForm
+from .utils import AjaxFormResponseMixin, get_object_or_json404
 
 
 class HomeView(DetailView):
-    """
+    '''
     View for home page. Return a Contact object for contact info.
-    """
+    '''
     model = Contact
     template_name = 'home.html'
 
     def get_object(self, queryset=None):
+        return Contact.objects.first()
+
+
+class AjaxContactUpdateView(AjaxFormResponseMixin, UpdateView):
+
+    form_class = UpdateContactForm
+    template_name = 'home.html'
+
+    def get_object(self, queryset=None):
+        # return get_object_or_json404(Contact, pk=self.kwargs['pk'])
         return Contact.objects.first()

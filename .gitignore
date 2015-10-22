@@ -16,3 +16,4 @@ static
 *.dat
 .env
 local.py
+uploads/

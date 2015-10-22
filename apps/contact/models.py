@@ -5,9 +5,9 @@ from imagekit.processors import ResizeToFill
 
 
 class Contact(models.Model):
-    """
-    Extending the User model with additional fields
-    """
+    '''
+    Model with additional user info
+    '''
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     date_of_birth = models.DateField(blank=True)
@@ -24,4 +24,4 @@ class Contact(models.Model):
                                       options={'quality': 60})
 
     def __unicode__(self):
-        return "{0} {1} {2}".format(self.id, self.first_name, self.last_name)
+        return '{0} {1} {2}'.format(self.id, self.first_name, self.last_name)

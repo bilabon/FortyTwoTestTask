@@ -5,3 +5,5 @@ selenium==2.48.0
 Pillow==3.0.0
 django-imagekit==3.2.7
 django-crispy-forms==1.5.1
+django-datetime-widget==0.9.3
+sorl-thumbnail

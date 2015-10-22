@@ -3,8 +3,8 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
-from apps.contact.views import HomeView
-from apps.requests.views import RequestLogListView, RequestCountView
+from apps.contact.views import HomeView, AjaxContactUpdateView
+from apps.requests.views import (RequestLogListView, RequestCountView, )
 
 
 admin.autodiscover()
@@ -24,9 +24,11 @@ urlpatterns = patterns(
         'next_page': '/',
     }, name='logout'),
 
-    url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^$', AjaxContactUpdateView.as_view(), name='home'),
     url(r'^requests/$', RequestLogListView.as_view(), name='request-log'),
     url(r'^request-count/$', RequestCountView.as_view(), name='request-count'),
+
+    url(r'^contact/$', AjaxContactUpdateView.as_view(), name='ajax_contact_update_view'),
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

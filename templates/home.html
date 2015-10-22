@@ -1,23 +1,124 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+    {% block head_javascript %}
+    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/datetimepicker.css' %}">
+    {% endblock %}
 
 {% block head_title %}Home | {{ block.super }}{% endblock %}
 
 {% block content %}
-        <div class="row">
-            <div class="col-sm-6">
-                <p><span class="text-muted">Name: </span>{{ object.first_name }}</p>
-                <p><span class="text-muted">Surname: </span>{{ object.last_name }}</p>
-                <p><span class="text-muted">Date of birth: </span>{{ object.date_of_birth|date:"m/d/Y" }}</p>
+<!--         <div class='row'>
+            <div class='col-sm-6'>
+                <p><span class='text-muted'>Name: </span>{{ object.first_name }}<div id='status'></div></p>
+                <p><span class='text-muted'>Surname: </span>{{ object.last_name }}</p>
+                <p><span class='text-muted'>Date of birth: </span>{{ object.date_of_birth|date:'m/d/Y' }}</p>
             </div>
 
-            <hr class="visible-xs">
+            <hr class='visible-xs'>
 
-            <div class="col-sm-6">
-                <p><span class="text-muted">Bio: </span>{{ object.bio }}</p>
-                <p><span class="text-muted">Contacts: </span>{{ object.contacts }}</p>
-                <p><span class="text-muted">Email: </span>{{ object.email }}</p>
-                <p><span class="text-muted">Jabber: </span>{{ object.jabber }}</p>
-                <p><span class="text-muted">Skype: </span>{{ object.skype }}</p>
+            <div class='col-sm-6'>
+                <p><span class='text-muted'>Bio: </span>{{ object.bio }}</p>
+                <p><span class='text-muted'>Contacts: </span>{{ object.contacts }}</p>
+                <p><span class='text-muted'>Email: </span>{{ object.email }}</p>
+                <p><span class='text-muted'>Jabber: </span>{{ object.jabber }}</p>
+                <p><span class='text-muted'>Skype: </span>{{ object.skype }}</p>
+                <p><span class='text-muted'>avatar_thumbnail: </span>{{ object.avatar_thumbnail }}</p>
+            </div>
+        </div> -->
+
+<form method='post' action='' id='contact-form' enctype='multipart/form-data'>
+{% csrf_token %}
+
+        <div class='col-sm-5'>
+            <div id="avatar_container" class='col-sm-12' {% if not object.avatar_thumbnail %}style="display: none;"{% endif %}>
+                <div class='col-sm-6'>
+                    <a href="#" class="thumbnail">
+                      <img id="avatar_thumbnail" src="{{ MEDIA_URL }}{{ object.avatar_thumbnail }}" alt="Avatar">
+                    </a>
+                </div>
+            </div>
+            
+
+            </br>
+            {{ form.first_name|as_crispy_field }}
+            {{ form.last_name|as_crispy_field }}
+            {{ form.date_of_birth|as_crispy_field }}
+
+            <input type='submit' class='btn btn-primary' value='Update'>
+
+        </div>
+        <div class='col-sm-7'>
+
+            {{ form.email|as_crispy_field }}
+            {{ form.jabber|as_crispy_field }}
+            {{ form.skype|as_crispy_field }}
+            {{ form.bio|as_crispy_field }}
+            {{ form.contacts|as_crispy_field }}
+            {{ form.avatar|as_crispy_field }}
+
+        </div>
+        <div class='col-sm-12'>
+
+            <div class='progress'>
+                <div class='progress-bar progress-bar-striped active' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'>
+                    <span class='sr-only'></span>
+                </div>
             </div>
         </div>
+</form>
+{% endblock %}
+
+{% block bottom_js %}
+<script src='https://malsup.github.io/jquery.form.js'></script>
+<script>
+$(document).ready(function(){
+
+$("#id_date_of_birth").datetimepicker({minView: 2,
+autoclose: true,
+startView: 2,
+format: 'yyyy-mm-dd'}).find('input').addClass("form-control");
+
+var bar = $('.progress-bar');
+var percent = $('.progress-bar');
+var status = $('.sr-only');
+   
+$('form').ajaxForm({
+    beforeSend: function() {
+         $("input[type=submit]").attr("disabled", "disabled");
+        console.log('beforeSend');
+        $("#id_avatar").replaceWith($("#id_avatar").clone());
+        status.empty();
+        var percentVal = '0%';
+        bar.width(percentVal)
+        percent.html(percentVal + ' Complete');
+    },
+    uploadProgress: function(event, position, total, percentComplete) {
+        var percentVal = percentComplete + '%';
+        bar.width(percentVal)
+        percent.html(percentVal + ' Complete');
+    },
+    success: function(data) {
+        $("input[type=submit]").removeAttr("disabled");
+        var percentVal = '100%';
+        bar.width(percentVal)
+        percent.html(percentVal + ' Complete');
+        console.log(data);
+        $("#avatar_thumbnail").attr("src",data['avatar_thumbnail']);
+        $("#avatar_container").show();
+    },
+    error: function(data) {
+        console.log(data);
+    },
+    complete: function(data) {
+        console.log(data);
+        //status.html(xhr.responseText);
+    }
+}); 
+
+});
+</script>
+
 {% endblock %}
