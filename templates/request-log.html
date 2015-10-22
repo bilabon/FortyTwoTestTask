@@ -18,7 +18,6 @@
 <script>
 $(document).ready(function(){
 
-
     function updateTitle(count){
         $.ajax({
             type: 'GET',
@@ -39,7 +38,6 @@ $(document).ready(function(){
     setInterval(function() {
         updateTitle({{ request_count }});
     }, 1000);
-
 
 });
 </script>

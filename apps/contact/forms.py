@@ -5,7 +5,7 @@ from .models import Contact
 from .widgets import AdminImageWidget, CalendarWidget
 
 
-class UpdateContactForm(ModelForm):
+class ContactEditForm(ModelForm):
     date_of_birth = forms.DateField(widget=CalendarWidget)
 
     class Meta:
