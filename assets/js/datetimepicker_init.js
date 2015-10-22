@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    $(".datewidget").datetimepicker({
+    $(".datetimepicker").datetimepicker({
         minView: 2,
         autoclose: true,
         startView: 2,
-        format: 'yyyy-mm-dd'}).addClass("form-control");
+        format: 'yyyy-mm-dd'}).find('input').addClass("form-control");
 });
