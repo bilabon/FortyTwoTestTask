@@ -2,11 +2,6 @@
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 
-    {% block head_javascript %}
-    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/datetimepicker.css' %}">
-    {% endblock %}
-
 {% block head_title %}Home | {{ block.super }}{% endblock %}
 
 {% block content %}
@@ -58,6 +53,7 @@
             {{ form.bio|as_crispy_field }}
             {{ form.contacts|as_crispy_field }}
             {{ form.avatar|as_crispy_field }}
+            {{ form.media }}
 
         </div>
         <div class='col-sm-12'>
@@ -75,11 +71,6 @@
 <script src='https://malsup.github.io/jquery.form.js'></script>
 <script>
 $(document).ready(function(){
-
-$("#id_date_of_birth").datetimepicker({minView: 2,
-autoclose: true,
-startView: 2,
-format: 'yyyy-mm-dd'}).find('input').addClass("form-control");
 
 var bar = $('.progress-bar');
 var percent = $('.progress-bar');
