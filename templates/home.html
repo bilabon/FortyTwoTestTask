@@ -78,7 +78,13 @@ var status = $('.sr-only');
    
 $('form').ajaxForm({
     beforeSend: function() {
-         $("input[type=submit]").attr("disabled", "disabled");
+
+        // remove all errors
+        $('.form-group').removeClass('has-error').find('.help-block').remove();
+
+        // disable submit button
+        $("input[type=submit]").attr("disabled", "disabled");
+
         console.log('beforeSend');
         $("#id_avatar").replaceWith($("#id_avatar").clone());
         status.empty();
@@ -102,10 +108,15 @@ $('form').ajaxForm({
     },
     error: function(data) {
         console.log(data);
+        $.each($.parseJSON(data.responseText), function(key, value){
+            console.log(key, value);
+            $('#div_id_' + key).addClass("has-error").find('.controls').append('<p id="error_1_id_' + key + '" class="help-block"><strong>' + value + '</strong></p>')
+        });
     },
     complete: function(data) {
+        // enable submit button
+        $("input[type=submit]").removeAttr('disabled');
         console.log(data);
-        //status.html(xhr.responseText);
     }
 }); 
 
