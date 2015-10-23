@@ -13,6 +13,12 @@ test:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) test
 	flake8 --exclude '*migrations*' --ignore=F401,F403,42cc apps fortytwo_test_task
 
+deploy:
+	virtualenv --no-site-packages .env
+	. $(ROOT_DIR)/.env/bin/activate; pip install -r $(ROOT_DIR)/requirements.txt
+	. $(ROOT_DIR)/.env/bin/activate; make syncdb
+	. $(ROOT_DIR)/.env/bin/activate; make migrate
+
 clean:
 	@echo Cleaning up *.pyc files
 	-find . | grep '.pyc$$' | xargs -I {} rm {}
