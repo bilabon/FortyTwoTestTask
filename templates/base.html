@@ -10,10 +10,10 @@
     </style>
 
     {% include "head_js.html" %}
-    <script>
+
+
     {% block head_javascript %}
     {% endblock %}
-    </script>
 
 </head>
 
@@ -28,12 +28,10 @@
 </div>
 <!-- /container -->
 
-<script>
+{% include 'footer.html' %}
+
 {% block bottom_js %}
 {% endblock %}
-</script>
-
-{% include 'footer.html' %}
 
 </body>
 </html>

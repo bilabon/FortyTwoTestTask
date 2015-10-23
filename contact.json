@@ -1,0 +1,17 @@
+[
+{
+    "pk": 1, 
+    "model": "contact.contact", 
+    "fields": {
+        "bio": "123123", 
+        "first_name": "The following notes and warnin", 
+        "last_name": "1Last", 
+        "contacts": "1123", 
+        "date_of_birth": "2015-10-15", 
+        "avatar": "avatars/Screen_Shot_2015-10-19_at_7.26.36_PM_MlMxN4k.png", 
+        "skype": "1123", 
+        "jabber": "1test@email.com", 
+        "email": "1test@email.com"
+    }
+}
+]

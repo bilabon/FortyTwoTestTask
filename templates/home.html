@@ -1,21 +1,32 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block head_title %}Home | {{ block.super }}{% endblock %}
 
 {% block content %}
-        <div class="row">
-            <div class="col-sm-6">
-                <p><span class="text-muted">Name: </span>{{ object.first_name }}</p>
-                <p><span class="text-muted">Surname: </span>{{ object.last_name }}</p>
-                <p><span class="text-muted">Date of birth: </span>{{ object.contact.date_of_birth|date:"m/d/Y" }}</p>
-            </div>
-
-            <hr class="visible-xs">
-
-            <div class="col-sm-6">
-                <p><span class="text-muted">Email: </span>{{ object.email }}</p>
-                <p><span class="text-muted">Bio: </span>{{ object.contact.bio }}</p>
-                <p><span class="text-muted">Contacts: </span>{{ object.contact.contacts }}</p>
+<div class='row'>
+    <div class='col-sm-6'>
+        <div class='col-sm-12' {% if not object.avatar_thumbnail %}style="display: none;"{% endif %}>
+            <div class='col-sm-4'>
+                <a href="{% if object.avatar %}{{ MEDIA_URL }}{{ object.avatar }}{% endif %}" class="thumbnail">
+                  <img id="avatar_thumbnail" src="{% if object.avatar_thumbnail %}{{ MEDIA_URL }}{{ object.avatar_thumbnail }}{% endif %}" alt="Avatar">
+                </a>
             </div>
         </div>
+
+
+        <p><span class='text-muted'>Name: </span>{{ object.first_name }}<div id='status'></div></p>
+        <p><span class='text-muted'>Surname: </span>{{ object.last_name }}</p>
+        <p><span class='text-muted'>Date of birth: </span>{{ object.date_of_birth|date:'m/d/Y' }}</p>
+    </div>
+
+    <hr class='visible-xs'>
+
+    <div class='col-sm-6'>
+        <p><span class='text-muted'>Bio: </span>{{ object.bio }}</p>
+        <p><span class='text-muted'>Contacts: </span>{{ object.contacts }}</p>
+        <p><span class='text-muted'>Email: </span>{{ object.email }}</p>
+        <p><span class='text-muted'>Jabber: </span>{{ object.jabber }}</p>
+        <p><span class='text-muted'>Skype: </span>{{ object.skype }}</p>
+    </div>
+</div>
 {% endblock %}

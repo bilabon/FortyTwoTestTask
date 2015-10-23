@@ -9,7 +9,6 @@ class RequestPageTest(TestCase):
     """
     Testing response from home page
     """
-    fixtures = ['fixtures/user.json']
 
     def test_exist_request_log_url(self):
         """

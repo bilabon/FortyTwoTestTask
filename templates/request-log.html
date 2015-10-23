@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block head_title %}Home | {{ block.super }}{% endblock %}
+{% block head_title %}Requests | {{ block.super }}{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -15,22 +15,21 @@
 {% endblock %}
 
 {% block bottom_js %}
-
+<script>
 $(document).ready(function(){
-
 
     function updateTitle(count){
         $.ajax({
             type: 'GET',
             url: '{% url "request-count" %}',
             error: function(data){
-                console.log(None);
+                console.log("Some error happened (function updateTitle)");
             },
             success: function(data){
                 count = data['request_count'] - count;
                 console.log(count);
                 if (count > 0) {
-                    document.title = '(' + count + ') Home | 42-test-bilabon';
+                    document.title = '(' + count + ') Requests | 42-test-bilabon';
                 };
                 
             }
@@ -40,7 +39,6 @@ $(document).ready(function(){
         updateTitle({{ request_count }});
     }, 1000);
 
-
 });
-
+</script>
 {% endblock %}

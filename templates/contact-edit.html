@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Edit | {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<form method='post' action='' id='contact-form' enctype='multipart/form-data'>
+{% csrf_token %}
+
+    <div class='col-sm-5'>
+        <div id="avatar_container" class='col-sm-12' {% if not object.avatar_thumbnail %}style="display: none;"{% endif %}>
+            <div class='col-sm-6'>
+                <a href="#" class="thumbnail">
+                  <img id="avatar_thumbnail" src="{% if object.avatar_thumbnail %}{{ MEDIA_URL }}{{ object.avatar_thumbnail }}{% endif %}" alt="Avatar">
+                </a>
+            </div>
+        </div>
+        </br>
+
+        {{ form.avatar|as_crispy_field }}
+        {{ form.first_name|as_crispy_field }}
+        {{ form.last_name|as_crispy_field }}
+        {{ form.date_of_birth|as_crispy_field }}
+
+    </div>
+    <div class='col-sm-7'>
+
+        {{ form.email|as_crispy_field }}
+        {{ form.jabber|as_crispy_field }}
+        {{ form.skype|as_crispy_field }}
+        {{ form.bio|as_crispy_field }}
+        {{ form.contacts|as_crispy_field }}
+
+        {{ form.media }}
+
+    </div>
+    <div class='col-sm-12'>
+        <div class='progress'>
+            <div class='progress-bar progress-bar-striped active' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'>
+                <span class='sr-only'></span>
+            </div>
+        </div>
+        <input type='submit' class='btn btn-primary' value='Update'>
+    </div>
+</form>
+{% endblock %}
+
+{% block bottom_js %}
+    <script type="text/javascript" src="{% static 'js/jquery.form.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/contact-edit.js' %}"></script>
+{% endblock %}
