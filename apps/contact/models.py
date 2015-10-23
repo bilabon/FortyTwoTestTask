@@ -28,6 +28,10 @@ class Contact(models.Model):
 
 
 class ObjectLogEntry(models.Model):
+    '''
+    For every model, creates the db entry about the object
+    creation/editing/deletion
+    '''
 
     CREATE = '0'
     UPDATE = '1'
