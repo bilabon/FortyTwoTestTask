@@ -42,9 +42,6 @@ $('form').ajaxForm({
         });
     },
     complete: function(data) {
-        // remove all errors
-        $('.form-group').removeClass('has-error').find('.help-block').remove();
-
         // enable submit button
         $("input[type=submit]").val('Update').removeAttr('disabled');
 

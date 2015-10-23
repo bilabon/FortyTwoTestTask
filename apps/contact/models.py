@@ -25,3 +25,25 @@ class Contact(models.Model):
 
     def __unicode__(self):
         return '{0} {1} {2}'.format(self.id, self.first_name, self.last_name)
+
+
+class ObjectLogEntry(models.Model):
+
+    CREATE = '0'
+    UPDATE = '1'
+    DELETE = '2'
+
+    ACTION_CHOICES = (
+        (CREATE, 'Create'),
+        (UPDATE, 'Update'),
+        (DELETE, 'Delete'),
+    )
+    object_name = models.CharField(max_length=100)
+    object_pk = models.IntegerField()
+    action = models.CharField(max_length=3, choices=ACTION_CHOICES)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return '{0} {1} {2}'.format(self.object_name,
+                                    self.object_pk,
+                                    dict(self.ACTION_CHOICES)[self.action])

@@ -8,7 +8,7 @@ class RequestLog(models.Model):
     method = models.CharField(max_length=10)
     path_info = models.CharField(max_length=200)
     server_protocol = models.CharField(max_length=10)
-    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ["-timestamp"]

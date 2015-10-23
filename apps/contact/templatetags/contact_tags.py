@@ -10,8 +10,9 @@ def admin_url(obj):
     '''
     Tag that accepts any object and renders the link to its admin edit page
     '''
-    url = reverse('admin:{0}_{1}_change'.format(
-        obj._meta.app_label, obj._meta.module_name), args=[obj.pk])
+    if obj:
+        url = reverse('admin:{0}_{1}_change'.format(
+            obj._meta.app_label, obj._meta.module_name), args=[obj.pk])
 
-    html = '<a href="%s">(Admin)</a>' % url
-    return mark_safe(html)
+        html = '<a href="%s">(Admin)</a>' % url
+        return mark_safe(html)
