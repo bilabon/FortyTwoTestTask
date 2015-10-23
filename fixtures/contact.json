@@ -11,7 +11,8 @@
         "avatar": "", 
         "skype": "test_skype", 
         "jabber": "test@jabber.com", 
-        "email": "test@email.com"
+        "email": "test@email.com",
+        "avatar": "image.jpg"
     }
 }
 ]

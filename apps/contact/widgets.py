@@ -13,7 +13,6 @@ class AdminImageWidget(AdminFileWidget):
 class CalendarWidget(DateInput):
 
     def render(self, name, value, attrs=None):
-        print 'attrs', attrs
         if not attrs:
             attrs = {'class': 'datewidget'}
         else:
