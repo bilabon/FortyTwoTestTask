@@ -7,7 +7,7 @@ from django.template import Context, Template
 from django.test import TestCase, Client
 
 from .templatetags import contact_tags
-from .models import Contact
+from .models import Contact, ObjectLogEntry
 
 
 class BaseSetup(TestCase):
@@ -128,7 +128,7 @@ class ContactTagTest(BaseSetup):
     '''
     def test_admin_url_tag(self):
         '''
-        tag that accepts any object and renders the link to its admin edit page
+        Tag that accepts any object and renders the link to its admin edit page
         '''
         contact = Contact.objects.first()
 
@@ -138,3 +138,45 @@ class ContactTagTest(BaseSetup):
         t = Template('{% load contact_tags %}' + template)
         c = Context(context)
         self.assertEqual(t.render(c), contact_tags.admin_url(contact))
+
+
+class SignalProcessorTest(TestCase):
+    '''
+     Testing signal processor that, for every model, creates
+     the db entry about the object creation/editing/deletion
+    '''
+    def setUp(self):
+        self.contact = Contact(id=777, date_of_birth='2015-10-20')
+        self.contact.save()
+
+    def test_handle_object_save(self):
+        '''
+        Handle post_save signal, check action CREATE
+        '''
+        obj = ObjectLogEntry.objects.filter(
+            object_name='Contact',
+            action=ObjectLogEntry.CREATE)
+        self.assertEqual(obj.count(), 1)
+
+    def test_handle_object_update(self):
+        '''
+        Handle post_save signal, check action UPDATE
+        '''
+        self.contact.date_of_birth = '2015-05-15'
+        self.contact.save()
+
+        obj = ObjectLogEntry.objects.filter(
+            object_name='Contact',
+            action=ObjectLogEntry.UPDATE)
+        self.assertEqual(obj.count(), 1)
+
+    def test_handle_object_delete(self):
+        '''
+        Handle post_delete signal, check action DELETE
+        '''
+        Contact.objects.get(id=777).delete()
+
+        obj = ObjectLogEntry.objects.filter(
+            object_name='Contact',
+            action=ObjectLogEntry.DELETE)
+        self.assertEqual(obj.count(), 1)
