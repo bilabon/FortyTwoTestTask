@@ -7,7 +7,6 @@ install:
 	. $(ROOT_DIR)/.env/bin/activate; pip install -r $(ROOT_DIR)/requirements.txt
 	. $(ROOT_DIR)/.env/bin/activate; make syncdb
 	. $(ROOT_DIR)/.env/bin/activate; make migrate
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) createsuperuser
 
 test:
 	$(MAKE) clean
