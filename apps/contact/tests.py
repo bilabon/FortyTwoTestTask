@@ -1,20 +1,23 @@
 import os
 import json
 from django.conf import settings
-from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 
+from django.template import Context, Template
+from django.test import TestCase, Client
+
+from .templatetags import contact_tags
 from .models import Contact
 
 
-class BaseTest(TestCase):
+class BaseSetup(TestCase):
     fixtures = ['fixtures/contact.json']
 
     def setUp(self):
         settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'fixtures')
 
 
-class ContactPageTest(BaseTest):
+class ContactPageTest(BaseSetup):
     '''
     Testing response from home page
     '''
@@ -58,7 +61,7 @@ class ContactPageTest(BaseTest):
                       'd5d5bbb7ef96e35e305d08.png', response.content)
 
 
-class ContactEditTest(BaseTest):
+class ContactEditTest(BaseSetup):
     '''
     Tests for editing Contact model
     '''
@@ -117,3 +120,21 @@ class ContactEditTest(BaseTest):
 
         contact = Contact.objects.first()
         self.assertEqual(data['date_of_birth'], str(contact.date_of_birth))
+
+
+class ContactTagTest(BaseSetup):
+    '''
+    Testing custom contact tags
+    '''
+    def test_admin_url_tag(self):
+        '''
+        tag that accepts any object and renders the link to its admin edit page
+        '''
+        contact = Contact.objects.first()
+
+        template = '{% admin_url contact %}'
+        context = {'contact': contact}
+
+        t = Template('{% load contact_tags %}' + template)
+        c = Context(context)
+        self.assertEqual(t.render(c), contact_tags.admin_url(contact))

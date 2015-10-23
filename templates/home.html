@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
-
+{% load contact_tags %}
 {% block head_title %}Home | {{ block.super }}{% endblock %}
 
 {% block content %}
 <div class='row'>
     <div class='col-sm-6'>
+        <p>{% admin_url object %}</p>
         <div class='col-sm-12' {% if not object.avatar_thumbnail %}style="display: none;"{% endif %}>
             <div class='col-sm-4'>
                 <a href="{% if object.avatar %}{{ MEDIA_URL }}{{ object.avatar }}{% endif %}" class="thumbnail">
@@ -12,7 +13,6 @@
                 </a>
             </div>
         </div>
-
 
         <p><span class='text-muted'>Name: </span>{{ object.first_name }}<div id='status'></div></p>
         <p><span class='text-muted'>Surname: </span>{{ object.last_name }}</p>
