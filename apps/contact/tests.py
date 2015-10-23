@@ -60,7 +60,7 @@ class ContactPageTest(BaseTest):
 
 class ContactEditTest(BaseTest):
     '''
-    Testing response from home page
+    Tests for editing Contact model
     '''
 
     def test_page_exist(self):
