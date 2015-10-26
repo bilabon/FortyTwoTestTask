@@ -24,5 +24,8 @@ class AjaxContactEditView(AjaxFormResponseMixin, UpdateView):
     template_name = 'contact-edit.html'
 
     def get_object(self, queryset=None):
+        obj = Contact.objects.first()
+        if not Contact.objects.first():
+            obj = Contact(date_of_birth='2015-10-20').save()
         # return get_object_or_json404(Contact, pk=self.kwargs['pk'])
-        return Contact.objects.first()
+        return obj

@@ -1,20 +1,29 @@
 import os
 import json
+from StringIO import StringIO
+
+from django.core.management import call_command
+from django.core.management.base import CommandError
+from django.contrib.contenttypes.models import ContentType
+
 from django.conf import settings
-from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 
-from .models import Contact
+from django.template import Context, Template
+from django.test import TestCase, Client
+
+from .templatetags import contact_tags
+from .models import Contact, ObjectLogEntry
 
 
-class BaseTest(TestCase):
+class BaseSetup(TestCase):
     fixtures = ['fixtures/contact.json']
 
     def setUp(self):
         settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'fixtures')
 
 
-class ContactPageTest(BaseTest):
+class ContactPageTest(BaseSetup):
     '''
     Testing response from home page
     '''
@@ -58,7 +67,7 @@ class ContactPageTest(BaseTest):
                       'd5d5bbb7ef96e35e305d08.png', response.content)
 
 
-class ContactEditTest(BaseTest):
+class ContactEditTest(BaseSetup):
     '''
     Tests for editing Contact model
     '''
@@ -117,3 +126,100 @@ class ContactEditTest(BaseTest):
 
         contact = Contact.objects.first()
         self.assertEqual(data['date_of_birth'], str(contact.date_of_birth))
+
+
+class ContactTagTest(BaseSetup):
+    '''
+    Testing custom contact tags
+    '''
+    def test_admin_url_tag(self):
+        '''
+        Tag that accepts any object and renders the link to its admin edit page
+        '''
+        contact = Contact.objects.first()
+
+        template = '{% admin_url contact %}'
+        context = {'contact': contact}
+
+        t = Template('{% load contact_tags %}' + template)
+        c = Context(context)
+        self.assertEqual(t.render(c), contact_tags.admin_url(contact))
+
+
+class SignalProcessorTest(TestCase):
+    '''
+     Testing signal processor that, for every model, creates
+     the db entry about the object creation/editing/deletion
+    '''
+    def setUp(self):
+        self.contact = Contact(id=777, date_of_birth='2015-10-20')
+        self.contact.save()
+
+    def test_handle_object_save(self):
+        '''
+        Handle post_save signal, check action CREATE
+        '''
+        obj = ObjectLogEntry.objects.filter(
+            object_name='Contact',
+            action=ObjectLogEntry.CREATE)
+        self.assertEqual(obj.count(), 1)
+
+    def test_handle_object_update(self):
+        '''
+        Handle post_save signal, check action UPDATE
+        '''
+        self.contact.date_of_birth = '2015-05-15'
+        self.contact.save()
+
+        obj = ObjectLogEntry.objects.filter(
+            object_name='Contact',
+            action=ObjectLogEntry.UPDATE)
+        self.assertEqual(obj.count(), 1)
+
+    def test_handle_object_delete(self):
+        '''
+        Handle post_delete signal, check action DELETE
+        '''
+        Contact.objects.get(id=777).delete()
+
+        obj = ObjectLogEntry.objects.filter(
+            object_name='Contact',
+            action=ObjectLogEntry.DELETE)
+        self.assertEqual(obj.count(), 1)
+
+
+class CommandTests(TestCase):
+    '''
+    Test infomodels command that prints all project models and
+    the count of objects in every model.
+    '''
+
+    def test_command_infomodels_stdout(self):
+        '''
+        Testing stdout of command.
+        '''
+        stdout = StringIO()
+        call_command('infomodels', stdout=stdout)
+        for ct in ContentType.objects.all():
+            m = ct.model_class()
+            line = "%s.%s\t%d" % (
+                m.__module__, m.__name__, m._default_manager.count())
+            self.assertIn(line, stdout.getvalue())
+
+    def test_command_infomodels_stderr(self):
+        '''
+        Testing stderr of command.
+        '''
+        stderr = StringIO()
+        call_command('infomodels', stderr=stderr)
+        for ct in ContentType.objects.all():
+            m = ct.model_class()
+            line = "%s.%s\t%d" % (
+                m.__module__, m.__name__, m._default_manager.count())
+            self.assertIn('Error: %s' % line, stderr.getvalue())
+
+    def test_exeption_not_allow_any_args(self):
+        '''
+        Raise CommandError: The command does not allow any args
+        '''
+        self.assertRaises(CommandError, call_command, 'infomodels args')

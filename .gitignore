@@ -17,3 +17,4 @@ static
 .env
 local.py
 uploads/
+logs/

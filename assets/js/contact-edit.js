@@ -11,7 +11,7 @@ $('form').ajaxForm({
         $('.form-group').removeClass('has-error').find('.help-block').remove();
 
         // disable submit button
-        $("input[type=submit]").attr("disabled", "disabled");
+        $("input[type=submit]").val('Loading...').attr("disabled", "disabled");
 
         console.log('beforeSend');
         $("#id_avatar").replaceWith($("#id_avatar").clone());
@@ -43,7 +43,8 @@ $('form').ajaxForm({
     },
     complete: function(data) {
         // enable submit button
-        $("input[type=submit]").removeAttr('disabled');
+        $("input[type=submit]").val('Update').removeAttr('disabled');
+
         console.log(data);
     }
 }); 

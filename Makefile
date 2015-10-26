@@ -1,6 +1,7 @@
 MANAGE=django-admin.py
 SETTINGS=fortytwo_test_task.settings
 ROOT_DIR=`pwd`
+DATE=$(date +%Y-%m-%d)
 
 install:
 	virtualenv --no-site-packages .env
@@ -25,7 +26,7 @@ clean:
 
 run:
 	$(MAKE) clean
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) runserver 8000
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) runserver 8004
 
 syncdb:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) syncdb --noinput
@@ -35,6 +36,10 @@ migrations:
 
 migrate:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) migrate
+
+infomodels:
+	if [ ! -d logs ]; then mkdir -p logs; fi;
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) infomodels 2> "logs/$DATE.dat"
 
 collectstatic:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) collectstatic --noinput

@@ -1,11 +1,20 @@
+import os
 import json
+from django.conf import settings
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
 from .models import RequestLog
 
 
-class RequestPageTest(TestCase):
+class BaseTest(TestCase):
+    fixtures = ['fixtures/contact.json']
+
+    def setUp(self):
+        settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'fixtures')
+
+
+class RequestPageTest(BaseTest):
     """
     Testing response from home page
     """
