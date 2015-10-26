@@ -10,7 +10,7 @@
                 <li><a href="{% url 'ajax_contact_edit_view' %}">Edit contacts</a></li>
             </ul>
 
-            <ul class="nav navbar-nav navbar-right">{{request}}
+            <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 <li><a href="#">Hi, {{ user }}!</a></li>
                 <li><a href="{% url 'logout' %}">Log out</a></li>
