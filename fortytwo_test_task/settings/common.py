@@ -1,4 +1,4 @@
-"""
+'''
 Django settings for fortytwo_test_task project.
 
 For more information on this file, see
@@ -6,7 +6,7 @@ https://docs.djangoproject.com/en/1.6/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
-"""
+'''
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -63,14 +63,14 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages",
-    "django.core.context_processors.request",
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.request',
 )
 
 ROOT_URLCONF = 'fortytwo_test_task.urls'
@@ -106,12 +106,12 @@ USE_TZ = True
 
 # Upload Media
 # Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
+# Example: '/home/media/media.lawrence.com/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+# Examples: 'http://media.lawrence.com/media/', 'http://example.com/media/'
 MEDIA_URL = '/uploads/'
 
 
@@ -120,8 +120,8 @@ MEDIA_URL = '/uploads/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
+# in apps' 'static/' subdirectories and in STATICFILES_DIRS.
+# Example: '/home/media/media.lawrence.com/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Static files (CSS, JavaScript, Images)
@@ -131,7 +131,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Put strings here, like '/home/html/static' or 'C:/www/django/static'.
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, 'assets'),
@@ -140,8 +140,8 @@ STATICFILES_DIRS = (
 
 # Template Settings
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or
-    # "C:/www/django/templates".
+    # Put strings here, like '/home/html/django_templates' or
+    # 'C:/www/django/templates'.
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, 'templates'),

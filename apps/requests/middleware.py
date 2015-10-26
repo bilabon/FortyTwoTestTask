@@ -5,9 +5,9 @@ from .models import RequestLog
 
 
 class SaveRequestMiddleware(object):
-    """
+    '''
     Custom middleware for saving all http requests to database
-    """
+    '''
     def process_request(self, request):
         path_info = request.META['PATH_INFO']
 

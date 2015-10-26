@@ -7,23 +7,23 @@ from .models import RequestLog
 
 
 class RequestLogListView(ListView):
-    """
+    '''
     Render page with 10 http requests and return http request count.
-    """
+    '''
     model = RequestLog
     paginate_by = 10
     template_name = 'request-log.html'
-    ordering = ["-timestamp", ]
+    ordering = ['-timestamp', ]
 
     def get_ordering(self):
-        """
+        '''
         Return the field or fields to use for ordering the queryset.
-        """
-        ordering = ["-timestamp", ]
+        '''
+        ordering = ['-timestamp', ]
         priority = self.request.GET.get('priority')
 
         if priority and priority == '1':
-            ordering.insert(0, "-priority")
+            ordering.insert(0, '-priority')
         return tuple(ordering)
 
     def get_queryset(self):
@@ -40,7 +40,7 @@ class RequestLogListView(ListView):
 
 
 class RequestCountView(View):
-    """Return count of http requests"""
+    '''Return count of http requests'''
 
     def get(self, request, *args, **kwargs):
         if request.is_ajax():

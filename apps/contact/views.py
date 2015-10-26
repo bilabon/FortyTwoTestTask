@@ -15,7 +15,10 @@ class HomeView(DetailView):
     template_name = 'home.html'
 
     def get_object(self, queryset=None):
-        return Contact.objects.first()
+        obj = Contact.objects.first()
+        if not obj:
+            obj = Contact.objects.create(date_of_birth='2015-10-20')
+        return obj
 
 
 class AjaxContactEditView(AjaxFormResponseMixin, UpdateView):
@@ -25,7 +28,5 @@ class AjaxContactEditView(AjaxFormResponseMixin, UpdateView):
 
     def get_object(self, queryset=None):
         obj = Contact.objects.first()
-        if not Contact.objects.first():
-            obj = Contact(date_of_birth='2015-10-20').save()
         # return get_object_or_json404(Contact, pk=self.kwargs['pk'])
         return obj

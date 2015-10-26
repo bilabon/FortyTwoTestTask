@@ -18,8 +18,8 @@ class Command(BaseCommand):
 
         for ct in ContentType.objects.all():
             m = ct.model_class()
-            line = "%s.%s\t%d" % (
+            line = '%s.%s\t%d' % (
                 m.__module__, m.__name__, m._default_manager.count())
 
             self.stdout.write(line)
-            self.stderr.write("Error: %s" % (line))
+            self.stderr.write('Error: %s' % (line))
