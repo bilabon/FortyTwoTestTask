@@ -3,14 +3,22 @@
 {% block head_title %}Requests | {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-sm-12">
-        <ul class="list-unstyled">
-            {% for object in object_list %}
-            <li>&bull; {{ object }}</li>
-            {% endfor %}
-        </ul>
+<div class='col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3'>
+
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Priority <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="{% url 'request-log' %}?priority=1">Priority 1</a></li>
+        <li><a href="{% url 'request-log' %}">Default</a></li>
+      </ul>
     </div>
+
+    <ul class="list-unstyled">
+        {% for object in object_list %}
+        <li>&bull; Priority: {{ object.priority }} | {{ object }}</li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}
 

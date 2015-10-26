@@ -9,9 +9,7 @@ class RequestLog(models.Model):
     path_info = models.CharField(max_length=200)
     server_protocol = models.CharField(max_length=10)
     timestamp = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-timestamp"]
+    priority = models.IntegerField(default=0)
 
     def __unicode__(self):
         return "Request {0} {1} {2}".format(
