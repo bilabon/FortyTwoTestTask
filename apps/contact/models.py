@@ -10,7 +10,7 @@ class Contact(models.Model):
     '''
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
-    date_of_birth = models.DateField(blank=True)
+    date_of_birth = models.DateField()
     bio = models.TextField(max_length=500, blank=True)
     contacts = models.TextField(max_length=500, blank=True)
     email = models.EmailField(blank=True)
