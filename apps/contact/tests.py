@@ -162,7 +162,7 @@ class SignalProcessorTest(TestCase):
         obj = ObjectLogEntry.objects.filter(
             object_name='Contact',
             action=ObjectLogEntry.CREATE)
-        self.assertEqual(obj.count(), 1)
+        self.assertEqual(obj.count(), 2)
 
     def test_handle_object_update(self):
         '''
