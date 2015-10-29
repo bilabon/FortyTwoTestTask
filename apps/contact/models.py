@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.contrib.auth.models import User
 from django.db import models
 from imagekit.models import ImageSpecField
@@ -24,7 +26,7 @@ class Contact(models.Model):
                                       options={'quality': 60})
 
     def __unicode__(self):
-        return '{0} {1} {2}'.format(self.id, self.first_name, self.last_name)
+        return u'{0} {1} {2}'.format(self.id, self.first_name, self.last_name)
 
 
 class ObjectLogEntry(models.Model):
