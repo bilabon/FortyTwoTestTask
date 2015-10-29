@@ -4,6 +4,7 @@
 
 {% block content %}
 <div class='row'>
+    {% if object %}
     <div class='col-sm-6'>
         <p>{% admin_url object %}</p>
         <div class='col-sm-12' {% if not object.avatar_thumbnail %}style="display: none;"{% endif %}>
@@ -28,5 +29,8 @@
         <p><span class='text-muted'>Jabber: </span>{{ object.jabber }}</p>
         <p><span class='text-muted'>Skype: </span>{{ object.skype }}</p>
     </div>
+    {% else %}
+    <p>Create Class object first</p>
+    {% endif %}
 </div>
 {% endblock %}
