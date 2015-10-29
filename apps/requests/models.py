@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 
 
@@ -12,5 +14,5 @@ class RequestLog(models.Model):
     priority = models.IntegerField(default=0)
 
     def __unicode__(self):
-        return 'Request {0} {1} {2}'.format(
+        return u'Request {0} {1} {2}'.format(
             self.method, self.path_info, self.server_protocol)
