@@ -20,4 +20,5 @@ class SaveRequestMiddleware(object):
             new_http_request.method = request.META['REQUEST_METHOD']
             new_http_request.path_info = path_info
             new_http_request.server_protocol = request.META['SERVER_PROTOCOL']
+            new_http_request.priority = 0
             new_http_request.save()
