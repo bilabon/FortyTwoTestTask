@@ -3,6 +3,7 @@ from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Migration(SchemaMigration):
@@ -17,6 +18,13 @@ class Migration(SchemaMigration):
             ('timestamp', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal(u'requests', ['RequestLog'])
+
+        #create initial user
+
+        user = User.objects.create_user('user', 'babyx64@gmail.com', 'user')
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
 
 
     def backwards(self, orm):
