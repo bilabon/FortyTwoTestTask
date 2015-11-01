@@ -13,7 +13,8 @@ class SaveRequestMiddleware(object):
 
         exlude_list = [reverse('request-count'),
                        reverse('admin:jsi18n'),
-                       settings.MEDIA_URL]
+                       settings.MEDIA_URL,
+                       settings.STATIC_URL]
 
         if not any(url in path_info for url in exlude_list):
             new_http_request = RequestLog()
