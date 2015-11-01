@@ -1,0 +1,16 @@
+.text-align-center {
+    text-align: center;
+}
+
+footer {
+    line-height: 3em;
+    margin-top: 3em;
+    background-color: rgb(247, 247, 249);
+    border-top: 1px solid #e1e1e8;
+    border-bottom: 1px solid #e1e1e8;
+}
+
+textarea.form-control {
+
+    min-height: 30px;
+}

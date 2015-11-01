@@ -166,6 +166,36 @@ class ContactEditTest(BaseSetup):
         contact = Contact.objects.first()
         self.assertEqual(data['date_of_birth'], str(contact.date_of_birth))
 
+    def test_submit_ajax_form(self):
+        '''
+        Test submiting the ajax form with cyrillic data
+        '''
+        data = {
+            'first_name': u'Вова',
+            'last_name': u'Тест',
+            'date_of_birth': '2014-10-23',
+            'bio': u'Тест',
+            'contacts': u'Тест',
+            'email': u'test@test.com',
+            'jabber': u'test@test.com',
+            'skype': u'Тест', }
+
+        client = Client()
+        response = client.post(reverse('ajax_contact_edit_view'), data=data)
+        resp_dict = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(resp_dict['success'])
+
+        contact = Contact.objects.first()
+        self.assertEqual(data['date_of_birth'], str(contact.date_of_birth))
+        self.assertEqual(data['first_name'], unicode(contact.first_name))
+        self.assertEqual(data['last_name'], unicode(contact.last_name))
+        self.assertEqual(data['bio'], unicode(contact.bio))
+        self.assertEqual(data['contacts'], unicode(contact.contacts))
+        self.assertEqual(data['email'], contact.email)
+        self.assertEqual(data['jabber'], contact.jabber)
+        self.assertEqual(data['skype'], unicode(contact.skype))
+
 
 class ContactTagTest(BaseSetup):
     '''

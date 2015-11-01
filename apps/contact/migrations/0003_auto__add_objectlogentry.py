@@ -18,7 +18,6 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'contact', ['ObjectLogEntry'])
 
-
     def backwards(self, orm):
         # Deleting model 'ObjectLogEntry'
         db.delete_table(u'contact_objectlogentry')

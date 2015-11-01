@@ -50,6 +50,6 @@ class ObjectLogEntry(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return '{0} {1} {2}'.format(self.object_name,
-                                    self.object_pk,
-                                    dict(self.ACTION_CHOICES)[self.action])
+        return u'{0} {1} {2}'.format(self.object_name,
+                                     self.object_pk,
+                                     dict(self.ACTION_CHOICES)[self.action])
