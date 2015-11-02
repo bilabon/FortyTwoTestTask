@@ -25,7 +25,6 @@ def handle_object_save_and_update(sender, instance, created, **kwargs):
                 try:
                     ObjectLogEntry.objects.get_or_create(**fields)
                 except TransactionManagementError:
-                    print u'fields', fields
                     ObjectLogEntry.objects.create(**fields)
 
 
