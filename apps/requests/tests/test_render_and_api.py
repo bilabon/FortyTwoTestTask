@@ -1,18 +1,10 @@
 import os
 import json
-import factory
 from django.conf import settings
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
 from requests.models import RequestLog
-
-
-class RequestLogFactory(factory.Factory):
-    class Meta:
-        model = RequestLog
-
-    path_info = factory.LazyAttribute(lambda a: '/some-url-{}/'.format(a.id))
 
 
 class RequestLogTest(TestCase):
@@ -52,7 +44,7 @@ class RequestLogTest(TestCase):
         RequestLog.objects.all().delete()
 
         for pk in xrange(15):
-            RequestLogFactory(id=pk).save_base()
+            RequestLog.objects.create(id=pk)
 
         response = self.client.get(reverse('request-log'))
 
