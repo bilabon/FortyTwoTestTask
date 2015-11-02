@@ -20,12 +20,10 @@ def handle_object_save_and_update(sender, instance, created, **kwargs):
                 action = ObjectLogEntry.UPDATE
 
             if isinstance(instance.pk, int):
-                entry = ObjectLogEntry(
+                entry, create = ObjectLogEntry.objects.get_or_create(
                     object_name=object_name,
                     object_pk=instance.pk,
-                    action=action, )
-
-                entry.save()
+                    action=action)
 
 
 @receiver(post_delete)
@@ -35,9 +33,7 @@ def handle_object_delete(sender, instance, **kwargs):
         if object_name not in EXCLUDE_LIST:
             action = ObjectLogEntry.DELETE
             if isinstance(instance.pk, int):
-                entry = ObjectLogEntry(
+                entry, create = ObjectLogEntry.objects.get_or_create(
                     object_name=object_name,
                     object_pk=instance.pk,
-                    action=action, )
-
-                entry.save()
+                    action=action)
