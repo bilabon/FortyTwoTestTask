@@ -100,3 +100,26 @@ class ContactEditTest(BaseSetup):
         self.assertEqual(data['email'], contact.email)
         self.assertEqual(data['jabber'], contact.jabber)
         self.assertEqual(data['skype'], unicode(contact.skype))
+
+    def test_upload_image(self):
+        '''
+        Test upload image and check image thumbnail
+        '''
+        contact = Contact.objects.first()
+
+        with open('fixtures/upload_image.png') as img:
+            data = {
+                'date_of_birth': '2012-12-12',
+                'avatar': img
+            }
+            self.client.post(reverse('ajax_contact_edit_view'), data=data)
+        new_contact = Contact.objects.first()
+
+        # check updating the image
+        self.assertNotEqual(contact.avatar, new_contact.avatar)
+        self.assertNotEqual(
+            contact.avatar_thumbnail, new_contact.avatar_thumbnail)
+
+        # check width and height of the thumbnail image
+        self.assertEqual(new_contact.avatar_thumbnail.width, 200)
+        self.assertEqual(new_contact.avatar_thumbnail.height, 200)

@@ -1,5 +1,6 @@
 import os
 import factory
+import shutil
 from mock import patch
 
 from django.conf import settings
@@ -49,6 +50,15 @@ class BaseSetup(TestCase):
 
     def setUp(self):
         settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'fixtures')
+
+        self.cache_dirs = [
+            os.path.join(settings.BASE_DIR, 'fixtures', 'CACHE'),
+            os.path.join(settings.BASE_DIR, 'fixtures', 'avatars'), ]
+
+        for path in self.cache_dirs:
+            if not os.path.exists(path):
+                os.makedirs(path)
+
         ContactFactory().save_base()
         UserFactory.create()
 
@@ -58,6 +68,9 @@ class BaseSetup(TestCase):
 
     def tearDown(self):
         self.patcher1.stop()
+        # remove CACHE folders
+        for path in self.cache_dirs:
+            shutil.rmtree(path)
 
     def test_initial(self):
         self.assertEqual(Contact.objects.count(), 1)
