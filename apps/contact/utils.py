@@ -26,7 +26,6 @@ class AjaxFormResponseMixin(object):
     '''
 
     def form_invalid(self, form):
-        # import pdb; pdb.set_trace()
         return render_to_json_response(form.errors, status=400)
 
     def form_valid(self, form):
@@ -43,5 +42,4 @@ class AjaxFormResponseMixin(object):
                    'AjaxFormResponseMixin': True,
                    'avatar_thumbnail': avatar_thumbnail, }
         # return the context as json
-        # import pdb; pdb.set_trace()
         return render_to_json_response(context)
