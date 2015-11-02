@@ -59,7 +59,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'apps.contact.middleware.ExceptionMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

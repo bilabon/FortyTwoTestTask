@@ -7,6 +7,9 @@
     {% if object %}
     <div class='col-sm-6'>
         <p>{% admin_url object %}</p>
+        <p><span class='text-muted'>Name: </span>{{ object.first_name }}<div id='status'></div></p>
+        <p><span class='text-muted'>Surname: </span>{{ object.last_name }}</p>
+        <p><span class='text-muted'>Date of birth: </span>{{ object.date_of_birth|date:'m/d/Y' }}</p>
         <div class='col-sm-12' {% if not object.avatar_thumbnail %}style="display: none;"{% endif %}>
             <div class='col-sm-4'>
                 <a href="{% if object.avatar %}{{ MEDIA_URL }}{{ object.avatar }}{% endif %}" class="thumbnail">
@@ -14,20 +17,16 @@
                 </a>
             </div>
         </div>
-
-        <p><span class='text-muted'>Name: </span>{{ object.first_name }}<div id='status'></div></p>
-        <p><span class='text-muted'>Surname: </span>{{ object.last_name }}</p>
-        <p><span class='text-muted'>Date of birth: </span>{{ object.date_of_birth|date:'m/d/Y' }}</p>
     </div>
 
     <hr class='visible-xs'>
 
     <div class='col-sm-6'>
-        <p><span class='text-muted'>Bio: </span>{{ object.bio|linebreaks }}</p>
-        <p><span class='text-muted'>Contacts: </span>{{ object.contacts|linebreaks }}</p>
         <p><span class='text-muted'>Email: </span>{{ object.email }}</p>
         <p><span class='text-muted'>Jabber: </span>{{ object.jabber }}</p>
         <p><span class='text-muted'>Skype: </span>{{ object.skype }}</p>
+        <p><span class='text-muted'>Bio: </span>{{ object.bio|linebreaks }}</p>
+        <p><span class='text-muted'>Contacts: </span>{{ object.contacts|linebreaks }}</p>
     </div>
     {% else %}
     <p>Create Class object first</p>

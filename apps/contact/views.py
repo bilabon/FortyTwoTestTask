@@ -2,9 +2,9 @@ from django.views.generic import DetailView, UpdateView
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
-from .models import Contact
-from .forms import ContactEditForm
-from .utils import AjaxFormResponseMixin, get_object_or_json404
+from contact.models import Contact
+from contact.forms import ContactEditForm
+from contact.utils import AjaxFormResponseMixin
 
 
 class HomeView(DetailView):
@@ -28,5 +28,4 @@ class AjaxContactEditView(AjaxFormResponseMixin, UpdateView):
         obj = Contact.objects.first()
         if not obj:
             obj = Contact.objects.create(date_of_birth='2015-10-22')
-        # return get_object_or_json404(Contact, pk=self.kwargs['pk'])
         return obj
