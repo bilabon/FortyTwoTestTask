@@ -2,7 +2,6 @@
 import json
 from django.core.urlresolvers import reverse
 from django.utils.encoding import smart_str
-from django.test import Client
 
 from contact.models import Contact
 from contact.tests.base import BaseSetup
@@ -50,8 +49,8 @@ class ContactEditTest(BaseSetup):
         Checking for error if required field was not specified
         '''
         data = {}
-        client = Client()
-        response = client.post(reverse('ajax_contact_edit_view'), data=data)
+        response = self.client.post(
+            reverse('ajax_contact_edit_view'), data=data)
         resp_dict = json.loads(response.content)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(resp_dict['date_of_birth'][0],
@@ -62,8 +61,9 @@ class ContactEditTest(BaseSetup):
         Updating date_of_birth field
         '''
         data = {'date_of_birth': '2014-10-22'}
-        client = Client()
-        response = client.post(reverse('ajax_contact_edit_view'), data=data)
+
+        response = self.client.post(
+            reverse('ajax_contact_edit_view'), data=data)
         resp_dict = json.loads(response.content)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(resp_dict['success'])
@@ -85,8 +85,8 @@ class ContactEditTest(BaseSetup):
             'jabber': u'test@test.com',
             'skype': u'Тест', }
 
-        client = Client()
-        response = client.post(reverse('ajax_contact_edit_view'), data=data)
+        response = self.client.post(
+            reverse('ajax_contact_edit_view'), data=data)
         resp_dict = json.loads(response.content)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(resp_dict['success'])

@@ -51,7 +51,7 @@ class ContactPageTest(BaseSetup):
         '''
         Checking if a cached image persist at home page
         '''
-        response = self.client.get(reverse('ajax_contact_edit_view'))
+        response = self.client.get(reverse('home'))
         self.assertIn('/uploads/CACHE/images/image/8e042c66a0'
                       'd5d5bbb7ef96e35e305d08.png', response.content)
 
