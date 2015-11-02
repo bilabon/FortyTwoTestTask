@@ -1,15 +1,15 @@
 import os
-from mock import patch
+# from mock import patch
 from django.conf import settings
 from django.test import TestCase
 
 
-class FakeMiddleware(object):
-    '''
-    Fake empty middleware
-    '''
-    def process_request(self, request):
-        return None
+# class FakeMiddleware(object):
+#     '''
+#     Fake empty middleware
+#     '''
+#     def process_request(self, request):
+#         return None
 
 
 class BaseSetup(TestCase):

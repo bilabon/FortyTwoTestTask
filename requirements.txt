@@ -8,5 +8,3 @@ django-imagekit
 django-crispy-forms==1.5.1
 sorl-thumbnail==12.3
 pytz
-factory-boy
-mock
