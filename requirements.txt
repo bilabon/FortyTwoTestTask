@@ -4,8 +4,8 @@ Django==1.6.7
 south==1.0.2
 selenium==2.48.0
 Pillow==3.0.0
-django-imagekit
+django-imagekit==3.2.7
 django-crispy-forms==1.5.1
 sorl-thumbnail==12.3
 pytz
-mock
+factory-boy
