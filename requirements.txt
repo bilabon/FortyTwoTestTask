@@ -10,3 +10,4 @@ sorl-thumbnail==12.3
 pytz
 factory-boy
 mock
+setuptools==18.5
