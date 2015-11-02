@@ -9,11 +9,13 @@ class SaveRequestMiddleware(object):
     Custom middleware for saving all http requests to database
     '''
     def process_request(self, request):
+
         path_info = request.META['PATH_INFO']
 
         exlude_list = [reverse('request-count'),
                        reverse('admin:jsi18n'),
-                       settings.MEDIA_URL]
+                       settings.MEDIA_URL,
+                       settings.STATIC_URL]
 
         if not any(url in path_info for url in exlude_list):
             new_http_request = RequestLog()

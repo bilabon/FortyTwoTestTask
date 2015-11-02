@@ -18,12 +18,7 @@ from .templatetags import contact_tags
 from .models import Contact, ObjectLogEntry
 from django.utils.encoding import smart_str
 
-
-class BaseSetup(TestCase):
-    fixtures = ['fixtures/contact.json']
-
-    def setUp(self):
-        settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'fixtures')
+from requests.tests.base import BaseSetup
 
 
 class ContactPageTest(BaseSetup):
