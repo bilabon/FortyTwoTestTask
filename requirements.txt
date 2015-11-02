@@ -1,3 +1,4 @@
+setuptools
 Django==1.6.7
 42cc-pystyle==0.0.15
 south==1.0.2
