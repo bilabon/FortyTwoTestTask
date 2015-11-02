@@ -12,6 +12,9 @@ class ContactEditTest(BaseSetup):
     '''
     Tests for editing Contact model
     '''
+    def setUp(self):
+        super(ContactEditTest, self).setUp()
+        self.client.login(username='smith', password='smith')
 
     def test_page_exist(self):
         '''

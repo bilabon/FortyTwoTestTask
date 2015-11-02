@@ -1,27 +1,5 @@
 import json
-from django.shortcuts import _get_queryset
 from django.http import HttpResponse
-
-
-class JsonNotFound(Exception):
-
-    def __init__(self):
-
-        Exception.__init__(self, 'Record not found')
-
-
-def get_object_or_json404(klass, *args, **kwargs):
-    '''
-    Replacement for django.shortcuts.get_object_or_404(),
-    allows json to be returned with a 404 error
-    '''
-
-    queryset = _get_queryset(klass)
-
-    try:
-        return queryset.get(*args, **kwargs)
-    except queryset.model.DoesNotExist:
-        raise JsonNotFound()
 
 
 def render_to_json_response(context, **response_kwargs):
@@ -48,6 +26,7 @@ class AjaxFormResponseMixin(object):
     '''
 
     def form_invalid(self, form):
+        # import pdb; pdb.set_trace()
         return render_to_json_response(form.errors, status=400)
 
     def form_valid(self, form):
@@ -64,4 +43,5 @@ class AjaxFormResponseMixin(object):
                    'AjaxFormResponseMixin': True,
                    'avatar_thumbnail': avatar_thumbnail, }
         # return the context as json
+        # import pdb; pdb.set_trace()
         return render_to_json_response(context)
