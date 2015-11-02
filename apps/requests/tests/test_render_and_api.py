@@ -1,10 +1,18 @@
 import os
 import json
+import factory
 from django.conf import settings
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
 from requests.models import RequestLog
+
+
+class RequestLogFactory(factory.Factory):
+    class Meta:
+        model = RequestLog
+
+    path_info = factory.LazyAttribute(lambda a: '/some-url-{}/'.format(a.id))
 
 
 class RequestLogTest(TestCase):
@@ -37,13 +45,20 @@ class RequestLogTest(TestCase):
             reverse('request-count'), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(json.loads(response.content)['request_count'], 2)
 
-    def test_requests_count_per_page(self):
+    def test_requests_pagination(self):
         '''
-        Should return 10 last requests at the page
+        Test: return 10 latest objects at the page
         '''
-        for index in xrange(15):
-            self.client.get(reverse('request-log'))
+        RequestLog.objects.all().delete()
+
+        for pk in xrange(15):
+            RequestLogFactory(id=pk).save_base()
 
         response = self.client.get(reverse('request-log'))
-        request_count = response.content.count(str(RequestLog.objects.last()))
-        self.assertEqual(request_count, 10)
+
+        # check count objects at page
+        self.assertEqual(len(response.context['object_list']), 10)
+
+        # check sorting objects at page
+        for pk, index in zip(xrange(15, 5, -1), xrange(10)):
+            self.assertEqual(response.context['object_list'][index].pk, pk)
