@@ -13,6 +13,9 @@ class FakeMiddleware(object):
 
 
 class BaseSetup(TestCase):
+    '''
+    Base settings for tests
+    '''
     fixtures = ['fixtures/contact.json']
 
     def setUp(self):
