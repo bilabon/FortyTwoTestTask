@@ -2,8 +2,6 @@
 
 import os
 import json
-import mock
-
 from StringIO import StringIO
 
 from django.core.management import call_command
@@ -20,10 +18,9 @@ from .templatetags import contact_tags
 from .models import Contact, ObjectLogEntry
 from django.utils.encoding import smart_str
 
-from requests.tests.base import BaseSetup, FakeMiddleware
+from requests.tests.base import BaseSetup
 
 
-@mock.patch('apps.requests.middleware.SaveRequestMiddleware', FakeMiddleware)
 class ContactPageTest(BaseSetup):
     '''
     Testing response from home page
