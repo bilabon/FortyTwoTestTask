@@ -12,36 +12,26 @@ EXCLUDE_LIST = ['ObjectLogEntry', 'LogEntry']
 @receiver(post_save)
 def handle_object_save_and_update(sender, instance, created, **kwargs):
     if ObjectLogEntry._meta.db_table in connection.introspection.table_names():
-        object_name = sender._meta.object_name
-        if object_name not in EXCLUDE_LIST:
+        if sender.__name__ not in EXCLUDE_LIST:
             if created:
                 action = ObjectLogEntry.CREATE
             else:
                 action = ObjectLogEntry.UPDATE
 
             if isinstance(instance.pk, int):
-                fields = {'object_name': object_name,
+                fields = {'object_name': sender.__name__,
                           'object_pk': instance.pk,
                           'action': action}
-
-                try:
-                    ObjectLogEntry.objects.get_or_create(**fields)
-                except (TransactionManagementError, MultipleObjectsReturned):
-                    ObjectLogEntry.objects.create(**fields)
+                ObjectLogEntry.objects.create(**fields)
 
 
 @receiver(post_delete)
 def handle_object_delete(sender, instance, **kwargs):
     if ObjectLogEntry._meta.db_table in connection.introspection.table_names():
-        object_name = sender._meta.object_name
-        if object_name not in EXCLUDE_LIST:
+        if sender.__name__ not in EXCLUDE_LIST:
             action = ObjectLogEntry.DELETE
             if isinstance(instance.pk, int):
-                fields = {'object_name': object_name,
+                fields = {'object_name': sender.__name__,
                           'object_pk': instance.pk,
                           'action': action}
-
-                try:
-                    ObjectLogEntry.objects.get_or_create(**fields)
-                except (TransactionManagementError, MultipleObjectsReturned):
-                    ObjectLogEntry.objects.create(**fields)
+                ObjectLogEntry.objects.create(**fields)

@@ -1,1 +1,0 @@
-from .signals import handle_object_save_and_update, handle_object_delete
