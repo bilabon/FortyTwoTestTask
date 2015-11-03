@@ -3,6 +3,7 @@ from django.db import connection
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.db.transaction import TransactionManagementError
+from django.core.exceptions import MultipleObjectsReturned
 from contact.models import ObjectLogEntry
 
 EXCLUDE_LIST = ['ObjectLogEntry', 'LogEntry']
@@ -22,9 +23,10 @@ def handle_object_save_and_update(sender, instance, created, **kwargs):
                 fields = {'object_name': object_name,
                           'object_pk': instance.pk,
                           'action': action}
+
                 try:
                     ObjectLogEntry.objects.get_or_create(**fields)
-                except TransactionManagementError:
+                except (TransactionManagementError, MultipleObjectsReturned):
                     ObjectLogEntry.objects.create(**fields)
 
 
@@ -35,7 +37,11 @@ def handle_object_delete(sender, instance, **kwargs):
         if object_name not in EXCLUDE_LIST:
             action = ObjectLogEntry.DELETE
             if isinstance(instance.pk, int):
-                ObjectLogEntry.objects.get_or_create(
-                    object_name=object_name,
-                    object_pk=instance.pk,
-                    action=action)
+                fields = {'object_name': object_name,
+                          'object_pk': instance.pk,
+                          'action': action}
+
+                try:
+                    ObjectLogEntry.objects.get_or_create(**fields)
+                except (TransactionManagementError, MultipleObjectsReturned):
+                    ObjectLogEntry.objects.create(**fields)
