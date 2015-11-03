@@ -9,8 +9,7 @@ from requests.models import RequestLog
 
 
 class RequestLogFactory(factory.Factory):
-    class Meta:
-        model = RequestLog
+    FACTORY_FOR = RequestLog
 
     path_info = factory.LazyAttribute(lambda a: '/some-url-{}/'.format(a.id))
 
