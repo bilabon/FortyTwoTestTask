@@ -1,7 +1,7 @@
 import os
 import factory
 import shutil
-# from mock import patch
+from mock import patch
 
 from django.conf import settings
 from django.test import TestCase
@@ -60,12 +60,12 @@ class BaseSetup(TestCase):
         ContactFactory().save_base()
         UserFactory.create()
 
-        # self.patcher1 = patch(
-        #     'apps.requests.middleware.SaveRequestMiddleware', FakeMiddleware)
-        # self.patcher1.start()
+        self.patcher1 = patch(
+            'apps.requests.middleware.SaveRequestMiddleware', FakeMiddleware)
+        self.patcher1.start()
 
     def tearDown(self):
-        # self.patcher1.stop()
+        self.patcher1.stop()
         # remove CACHE folders
         for path in self.cache_dirs:
             shutil.rmtree(path)
