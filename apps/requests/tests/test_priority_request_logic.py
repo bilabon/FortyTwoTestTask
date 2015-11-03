@@ -27,5 +27,4 @@ class RequestPriorityLogTest(TestCase):
         # Now we have 11 records at RequestLog model and paginate_by = 10,
         # so we check if firts record with priority=1 exist in template
         response = self.client.get(reverse('request-log'), {'priority': 1})
-        self.assertIn(
-            'Priority: 1 | Request GET %s' % reverse('home'), response.content)
+        self.assertEqual(response.context['object_list'][0].priority, 1)
