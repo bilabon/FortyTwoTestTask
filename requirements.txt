@@ -7,5 +7,5 @@ django-imagekit==3.2.7
 django-crispy-forms==1.5.1
 sorl-thumbnail==12.3
 pytz
-factory-boy<2.2
+factory-boy==2.1.1
 mock<1.2
