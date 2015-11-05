@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import ModelForm, Textarea
 
-from .models import Contact
-from .widgets import AdminImageWidget, CalendarWidget
+from contact.models import Contact
+from contact.widgets import AdminImageWidget, CalendarWidget
 
 
 class ContactEditForm(ModelForm):

@@ -9,8 +9,7 @@ from requests.models import RequestLog
 
 
 class RequestLogFactory(factory.Factory):
-    class Meta:
-        model = RequestLog
+    FACTORY_FOR = RequestLog
 
     path_info = factory.LazyAttribute(lambda a: '/some-url-{}/'.format(a.id))
 
@@ -60,5 +59,8 @@ class RequestLogTest(TestCase):
         self.assertEqual(len(response.context['object_list']), 10)
 
         # check sorting objects at page
-        for pk, index in zip(xrange(15, 5, -1), xrange(10)):
-            self.assertEqual(response.context['object_list'][index].pk, pk)
+        obj_list_sorted = RequestLog.objects.all().order_by('-timestamp')[:10]
+        self.assertQuerysetEqual(
+            response.context['object_list'],
+            [repr(obj) for obj in obj_list_sorted]
+        )

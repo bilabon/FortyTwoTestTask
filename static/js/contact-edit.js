@@ -30,9 +30,11 @@ $('form').ajaxForm({
         var percentVal = '100%';
         bar.width(percentVal)
         percent.html(percentVal + ' Complete');
-        console.log(data);
-        $("#avatar_thumbnail").attr("src",data['avatar_thumbnail']);
-        $("#avatar_container").show();
+        console.log('success: ' + data);
+        if (data['avatar_thumbnail']){
+            $("#avatar_thumbnail").attr("src", data['avatar_thumbnail']);
+            $("#avatar_container").show();
+        }
     },
     error: function(data) {
         console.log(data);

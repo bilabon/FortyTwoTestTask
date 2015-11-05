@@ -18,6 +18,7 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'contact', ['ObjectLogEntry'])
 
+
     def backwards(self, orm):
         # Deleting model 'ObjectLogEntry'
         db.delete_table(u'contact_objectlogentry')
@@ -29,7 +30,7 @@ class Migration(SchemaMigration):
             'avatar': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'bio': ('django.db.models.fields.TextField', [], {'max_length': '500', 'blank': 'True'}),
             'contacts': ('django.db.models.fields.TextField', [], {'max_length': '500', 'blank': 'True'}),
-            'date_of_birth': ('django.db.models.fields.DateField', [], {'blank': 'True'}),
+            'date_of_birth': ('django.db.models.fields.DateField', [], {}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),

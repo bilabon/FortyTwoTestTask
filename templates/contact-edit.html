@@ -12,6 +12,9 @@
 
     <div class='col-sm-5'>
         <p>{% admin_url object %}</p>
+        {{ form.first_name|as_crispy_field }}
+        {{ form.last_name|as_crispy_field }}
+        {{ form.date_of_birth|as_crispy_field }}
         <div id="avatar_container" class='col-sm-12' {% if not object.avatar_thumbnail %}style="display: none;"{% endif %}>
             <div class='col-sm-6'>
                 <a href="#" class="thumbnail">
@@ -19,12 +22,7 @@
                 </a>
             </div>
         </div>
-        </br>
-
         {{ form.avatar|as_crispy_field }}
-        {{ form.first_name|as_crispy_field }}
-        {{ form.last_name|as_crispy_field }}
-        {{ form.date_of_birth|as_crispy_field }}
 
     </div>
     <div class='col-sm-7'>

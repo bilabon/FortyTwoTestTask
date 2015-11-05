@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.decorators import login_required
 
 from apps.contact.views import HomeView, AjaxContactEditView
 from apps.requests.views import (RequestLogListView, RequestCountView, )
@@ -28,7 +29,7 @@ urlpatterns = patterns(
     url(r'^requests/$', RequestLogListView.as_view(), name='request-log'),
     url(r'^request-count/$', RequestCountView.as_view(), name='request-count'),
 
-    url(r'^edit/$', AjaxContactEditView.as_view(),
+    url(r'^edit/$', login_required(AjaxContactEditView.as_view()),
         name='ajax_contact_edit_view'),
 )
 
