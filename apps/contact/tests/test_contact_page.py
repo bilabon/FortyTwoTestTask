@@ -52,8 +52,8 @@ class ContactPageTest(BaseSetup):
         Checking if a cached image persist at home page
         '''
         response = self.client.get(reverse('home'))
-        self.assertIn('/uploads/CACHE/images/image/8e042c66a0'
-                      'd5d5bbb7ef96e35e305d08.png', response.content)
+        self.assertIn('/uploads/CACHE/images/image/'
+                      '0803a5b09a7837e97c526ea2fb2e89c4.png', response.content)
 
     def test_two_record_at_db(self):
         '''

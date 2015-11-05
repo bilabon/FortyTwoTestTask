@@ -3,7 +3,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
+from imagekit.processors import ResizeToFit
 
 
 class Contact(models.Model):
@@ -21,7 +21,7 @@ class Contact(models.Model):
 
     avatar = models.ImageField(upload_to='avatars', null=True, blank=True)
     avatar_thumbnail = ImageSpecField(source='avatar',
-                                      processors=[ResizeToFill(200, 200)],
+                                      processors=[ResizeToFit(200, 200)],
                                       format='PNG',
                                       options={'quality': 60})
 

@@ -27,8 +27,8 @@ class ContactEditTest(BaseSetup):
         Checking if a cached image persist at contacts edit page
         '''
         response = self.client.get(reverse('ajax_contact_edit_view'))
-        self.assertIn('/uploads/CACHE/images/image/8e042c66a0'
-                      'd5d5bbb7ef96e35e305d08.png', response.content)
+        self.assertIn('/uploads/CACHE/images/image/'
+                      '0803a5b09a7837e97c526ea2fb2e89c4.png', response.content)
 
     def test_assert_other_data_at_page(self):
         '''
@@ -103,7 +103,8 @@ class ContactEditTest(BaseSetup):
 
     def test_upload_image(self):
         '''
-        Test upload image and check image thumbnail
+        Photo should be scaled on the backend to 200x200,
+        maintaining aspect ratio
         '''
         contact = Contact.objects.first()
 
@@ -113,6 +114,7 @@ class ContactEditTest(BaseSetup):
                 'avatar': img
             }
             self.client.post(reverse('ajax_contact_edit_view'), data=data)
+
         new_contact = Contact.objects.first()
 
         # check updating the image
@@ -120,6 +122,10 @@ class ContactEditTest(BaseSetup):
         self.assertNotEqual(
             contact.avatar_thumbnail, new_contact.avatar_thumbnail)
 
-        # check width and height of the thumbnail image
+        # check original image width and height
+        self.assertEqual(new_contact.avatar.width, 400)
+        self.assertEqual(new_contact.avatar.height, 300)
+
+        # check maintaining aspect ratio of the thumbnail
         self.assertEqual(new_contact.avatar_thumbnail.width, 200)
-        self.assertEqual(new_contact.avatar_thumbnail.height, 200)
+        self.assertEqual(new_contact.avatar_thumbnail.height, 150)
