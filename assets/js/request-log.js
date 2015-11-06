@@ -12,6 +12,7 @@ $(document).ready(function() {
             url: '/request-count/',
             error: function(data) {
                 console.log('Some error happened (function GetData)');
+                console.log(data);
             },
             success: function(data) {
                 console.log(data['object_list']);
@@ -46,7 +47,8 @@ $(document).ready(function() {
             type: 'POST',
             url: '/request-count/',
             error: function(data) {
-                console.log('Some error happened (function SetViewed)' + data);
+                console.log('Some error happened (function SetViewed)');
+                console.log(data);
             },
             success: function(data) {
                 console.log(data);
