@@ -1,4 +1,5 @@
 import json
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, Http404
 from django.views.generic import View, ListView
 from django.contrib.auth.models import User
@@ -41,6 +42,10 @@ class RequestLogListView(HandleOrderingMixin, ListView):
 
 class RequestCountView(HandleOrderingMixin, View):
     '''Return count of http requests'''
+
+    @csrf_exempt
+    def dispatch(self, *args, **kwargs):
+        return super(RequestCountView, self).dispatch(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         if request.is_ajax():
