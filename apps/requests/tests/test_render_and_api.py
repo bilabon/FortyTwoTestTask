@@ -71,7 +71,7 @@ class RequestLogTest(TestCase):
         POST request and after that check request count through GET request
         '''
         RequestLog.objects.all().delete()
-        # generate 1 objects with viewed=True
+        # generate 1 object with viewed=True
         RequestLogFactory(id=1, viewed=True).save_base()
 
         # generate 15 objects with viewed=False
