@@ -1,28 +1,42 @@
 import os
-from mock import patch
+import factory
+import shutil
+
 from django.conf import settings
 from django.test import TestCase
+from django.contrib.auth.models import User
 
 
-class FakeMiddleware(object):
-    '''
-    Fake empty middleware
-    '''
-    def process_request(self, request):
-        return None
+class UserFactory(factory.DjangoModelFactory):
+    FACTORY_FOR = User
+
+    username = 'smith'
+    password = factory.PostGenerationMethodCall('set_password', 'smith')
+    is_active = True
 
 
 class BaseSetup(TestCase):
     '''
-    Base settings for tests
+    Base configs for tests
     '''
-    fixtures = ['fixtures/contact.json']
 
     def setUp(self):
         settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'fixtures')
-        self.patcher1 = patch(
-            'apps.requests.middleware.SaveRequestMiddleware', FakeMiddleware)
-        self.patcher1.start()
+
+        self.cache_dirs = [
+            os.path.join(settings.BASE_DIR, 'fixtures', 'CACHE'),
+            os.path.join(settings.BASE_DIR, 'fixtures', 'avatars'), ]
+
+        for path in self.cache_dirs:
+            if not os.path.exists(path):
+                os.makedirs(path)
+
+        UserFactory.create()
 
     def tearDown(self):
-        self.patcher1.stop()
+        # remove CACHE folders
+        for path in self.cache_dirs:
+            shutil.rmtree(path)
+
+    def test_initial(self):
+        self.assertEqual(User.objects.count(), 2)
