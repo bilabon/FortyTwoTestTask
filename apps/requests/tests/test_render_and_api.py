@@ -64,3 +64,30 @@ class RequestLogTest(TestCase):
             response.context['object_list'],
             [repr(obj) for obj in obj_list_sorted]
         )
+
+    def test_update_viewed_field(self):
+        '''
+        Emulating GET request and check request_count then emulating
+        POST request and after that check request count through GET request
+        '''
+        RequestLog.objects.all().delete()
+        # generate 1 objects with viewed=True
+        RequestLogFactory(id=1, viewed=True).save_base()
+
+        # generate 15 objects with viewed=False
+        for pk in xrange(2, 17):
+            RequestLogFactory(id=pk).save_base()
+
+        # check request_count through GET request
+        response = self.client.get(
+            reverse('request-count'), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(json.loads(response.content)['request_count'], 15)
+
+        # after a POST request the request_count must equal 0
+        self.client.post(
+            reverse('request-count'), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.get(
+            reverse('request-count'), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+
+        # check request_count
+        self.assertEqual(json.loads(response.content)['request_count'], 0)
