@@ -40,6 +40,6 @@ $(document).ready(function() {
 
     setInterval(function() {
         HandleVisibility(!Visibility.hidden());
-    }, 1000);
+    }, 2000);
 
 });
