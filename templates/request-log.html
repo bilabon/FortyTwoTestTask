@@ -13,7 +13,7 @@
             <span class='requests obj-priority badge alert-info'>Priority: {{ object.priority }}</span>
             <span class='requests obj-title badge alert-info'>{{ object }}</span>
             <span class='requests obj-timestamp badge alert-info'>{{ object.timestamp|date:'Y-m-d H:i' }}</span>
-            <span class='requests obj-viewed badge alert-info'>Viewed: {{ object.viewed }}</span>
+            <span class='requests obj-viewed badge alert-success'>{{ object.viewed }}</span>
         </li>
         {% endfor %}
     </ul>
@@ -23,5 +23,6 @@
 
 {% block bottom_js %}
 {% load staticfiles %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.1/visibility.min.js"></script>
     <script type="text/javascript" src="{% static 'js/request-log.js' %}"></script>
 {% endblock %}

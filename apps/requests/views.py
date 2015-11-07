@@ -1,5 +1,4 @@
 import json
-from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, Http404
 from django.views.generic import View, ListView
 from django.contrib.auth.models import User
@@ -41,19 +40,21 @@ class RequestLogListView(HandleOrderingMixin, ListView):
 
 
 class RequestCountView(HandleOrderingMixin, View):
-    '''Return count of http requests'''
-
-    @csrf_exempt
-    def dispatch(self, *args, **kwargs):
-        return super(RequestCountView, self).dispatch(*args, **kwargs)
+    '''
+    Updateing RequestLog objects based on GET viewed parameter.
+    '''
 
     def get(self, request, *args, **kwargs):
         if request.is_ajax():
             context = {}
             mimetype = 'application/json'
-
             queryset = RequestLog.objects.filter(viewed=False)
             context['request_count'] = queryset.count()
+
+            if self.request.GET.get('viewed') == 'true':
+                queryset.update(viewed=True)
+                queryset = RequestLog.objects.all()
+                context['request_count'] = 0
 
             ordering = self.get_ordering()
             if ordering:
@@ -72,12 +73,3 @@ class RequestCountView(HandleOrderingMixin, View):
             context['object_list'] = data
             data = json.dumps(context)
             return HttpResponse(data, mimetype)
-
-    def post(self, request, *args, **kwargs):
-        if request.is_ajax():
-            mimetype = 'application/json'
-            RequestLog.objects.filter(viewed=False).update(viewed=True)
-            data = json.dumps({'success': True})
-            return HttpResponse(data, mimetype)
-        else:
-            raise Http404

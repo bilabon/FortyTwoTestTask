@@ -80,14 +80,14 @@ class RequestLogTest(TestCase):
 
         # check request_count through GET request
         response = self.client.get(
-            reverse('request-count'), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+            reverse('request-count'),
+            {'viewed': 'false'}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(json.loads(response.content)['request_count'], 15)
 
-        # after a POST request the request_count must equal 0
-        self.client.post(
-            reverse('request-count'), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        # emulate request when user visiting the page
         response = self.client.get(
-            reverse('request-count'), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+            reverse('request-count'),
+            {'viewed': 'true'}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
 
         # check request_count
         self.assertEqual(json.loads(response.content)['request_count'], 0)

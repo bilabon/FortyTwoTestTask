@@ -6,10 +6,14 @@ $(document).ready(function() {
 
     var title = document.title;
 
-    function GetData() {
+    function HandleVisibility(viewed) {
+        console.log(viewed);
         $.ajax({
             type: 'GET',
             url: '/request-count/',
+            data: {
+                'viewed': viewed
+            },
             error: function(data) {
                 console.log('Some error happened (function GetData)');
                 console.log(data);
@@ -22,57 +26,20 @@ $(document).ready(function() {
                     li.find('.obj-priority').html('Priority: ' + value['priority']);
                     li.find('.obj-title').html(value['title']);
                     li.find('.obj-timestamp').html(value['timestamp']);
-                    li.find('.obj-viewed').html('Viewed: ' + value['viewed']);
+                    var viewed_html = viewed ? 'True' : 'False';
+                    li.find('.obj-viewed').html(viewed_html);
                 });
 
                 count = data['request_count'];
                 console.log(count);
-                if (count > 0) {
-                    document.title = '(' + count + ') ' + title;
-                } else {
-                    document.title = title;
-                }
+                document.title = (!viewed & count > 0) ? '(' + count + ') ' + title : title;
 
             }
         });
     }
 
     setInterval(function() {
-        GetData();
+        HandleVisibility(!Visibility.hidden());
     }, 1000);
-
-    // DETECT USER IS ACTIVE AND UPDATE $('.obj-viewed').html() WITH 'Viewed: True'
-    function SetViewed() {
-        $.ajax({
-            type: 'POST',
-            url: '/request-count/',
-            error: function(data) {
-                console.log('Some error happened (function SetViewed)');
-                console.log(data);
-            },
-            success: function(data) {
-                console.log(data);
-                $('.obj-viewed').html('Viewed: True');
-            }
-        });
-    }
-
-    var idleState = false;
-    var idleTimer = null;
-
-    $('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function() {
-        clearTimeout(idleTimer);
-        if (idleState === true) {
-            SetViewed();
-        }
-        idleState = false;
-        idleTimer = setTimeout(function() {
-            idleState = true;
-        }, 1000);
-    });
-
-    $('body').trigger('mousemove');
-    // END DETECT USER IS ACTIVE
-
 
 });
