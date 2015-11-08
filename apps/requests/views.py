@@ -73,3 +73,4 @@ class RequestCountView(HandleOrderingMixin, View):
             context['object_list'] = data
             data = json.dumps(context)
             return HttpResponse(data, mimetype)
+        raise Http404
